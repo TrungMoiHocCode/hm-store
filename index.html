@@ -53,5 +53,60 @@
         <li> <a class="fa fa-shopping-bag" href=""></a> </li>
     </div>
 </header>
+<section id="slider">
+    <div class="aspect-ratio-169">
+        <img src="images/slider1.webp">
+        <img src="images/slider2.webp">
+        <img src="images/slider3.webp">
+    </div>
+<div class="dot-container">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+</div>
+</section>
 </body>
+<script>
+    const imgPosition = document.querySelectorAll(".aspect-ratio-169 img");
+    const imgContainer = document.querySelector(".aspect-ratio-169");
+    const dotItem = document.querySelectorAll(".dot");
+    let imgNumber = imgPosition.length;
+    let index = 0;
+    
+    // Sắp xếp ảnh thành hàng ngang
+    imgPosition.forEach((image, index) => {
+        image.style.left = index * 100 + "%";
+    });
+    
+    function imgSlide() {
+        index++;
+        if (index >= imgNumber) {
+            index = 0;
+        }
+        slider(index);
+    }
+    
+    // Hàm chuyển đổi slide
+    function slider(index) {
+        imgContainer.style.transform = `translateX(-${index * 100}%)`;
+        const dotActive = document.querySelector(".active");
+        dotActive.classList.remove("active");   
+        dotItem[index].classList.add("active");
+    }
+    
+    // Tự động chạy slide
+    let interval = setInterval(imgSlide, 5000);
+    
+    // Xử lý click vào dot
+    dotItem.forEach((dot, dotIndex) => {
+        dot.addEventListener("click", function() {
+            clearInterval(interval); // Dừng tự động chạy
+            slider(dotIndex);
+            index = dotIndex;
+            interval = setInterval(imgSlide, 5000); // Chạy lại
+        });
+    });
+    </script>
+    
+
 </html>
